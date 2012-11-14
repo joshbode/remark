@@ -63,7 +63,16 @@ var getSquareBracketedText = function (text) {
 };
 
 converter.convertMarkdown = function (content) {
-  content.innerHTML = marked(content.innerHTML.replace(/^\s+/, ''));
+
+  // convert content to raw markdown source string
+  var source = "";
+  for (var i = 0; i < content.childNodes.length; ++i) {
+    var node = content.childNodes[i];
+    source += node.nodeName === "#text" ? node.data : node.outerHTML + '\n';
+  }
+  source = source.trim();
+
+  content.innerHTML = marked(source.replace(/^\s+/, ''));
 
   content.innerHTML = content.innerHTML.replace(/&[l|g]t;/g,
     function (match) {
