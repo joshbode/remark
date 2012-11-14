@@ -65,12 +65,7 @@ var getSquareBracketedText = function (text) {
 converter.convertMarkdown = function (content) {
 
   // convert content to raw markdown source string
-  var source = "";
-  for (var i = 0; i < content.childNodes.length; ++i) {
-    var node = content.childNodes[i];
-    source += node.nodeName === "#text" ? node.data : node.outerHTML + '\n';
-  }
-  source = source.trim();
+  var source = content.childNodes[0].nodeValue;
 
   content.innerHTML = marked(source.replace(/^\s+/, ''));
 
